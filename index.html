@@ -2,81 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>NEET Practice – Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Free NEET chapter-wise MCQ practice for Physics, Chemistry, and Biology." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="questions" href="questions.js" />
+  <title>NEET Practice — Fast MCQ Revision</title>
 
+  <!-- SEO -->
+  <meta name="description" content="NEET Practice — chapter-wise MCQs, full mock tests and instant scoring. Start a free test now." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="container">
-    <h1>NEET Practice</h1>
-    <p class="tagline">Chapter-wise MCQs • Instant score • Review mistakes</p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">NEET<span class="accent">Practice</span></div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a class="btn ghost" href="#start">Start Free</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="container card">
-    <h2>Start a Quiz</h2>
+  <section class="hero container">
+    <div class="hero-left">
+      <h1>Practice smarter for NEET — chapterwise MCQs & full mocks</h1>
+      <p class="lead">Instant scoring • Detailed solutions • Track progress. Free 10-question test — start now.</p>
+      <div class="cta">
+        <a id="start" class="btn primary" href="index.html#quizstarter">Try Free 10-Q</a>
+        <a class="btn secondary" href="#features">See Features</a>
+      </div>
 
-    <label class="field">
-      <span>Subject</span>
-      <select id="subject">
-        <option value="physics">Physics</option>
-        <option value="chemistry">Chemistry</option>
-        <option value="biology">Biology</option>
-      </select>
-    </label>
+      <div class="trust">
+        <span>Trusted by <b>50,000+</b> aspirants</span>
+        <span>•</span>
+        <span><b>20k+</b> practice questions</span>
+      </div>
+    </div>
 
-    <label class="field">
-      <span>Chapter</span>
-      <select id="chapter">
-        <!-- Options are filled by JS -->
-      </select>
-    </label>
+    <div class="hero-right card">
+      <h3>Quick Quiz — Try 10 Qs</h3>
+      <form id="quickForm">
+        <label>Subject
+          <select id="quickSubject"><option value="physics">Physics</option><option value="chemistry">Chemistry</option><option value="biology">Biology</option></select>
+        </label>
+        <label>Count
+          <select id="quickCount"><option>5</option><option selected>10</option><option>20</option></select>
+        </label>
+        <button type="button" id="quickStart" class="btn primary">Start Now</button>
+      </form>
+      <small class="muted">No signup — try instantly</small>
+    </div>
+  </section>
 
-    <label class="field">
-      <span>Number of Questions</span>
-      <select id="count">
-        <option>5</option>
-        <option selected>10</option>
-        <option>15</option>
-        <option>20</option>
-      </select>
-    </label>
+  <section id="features" class="container features">
+    <div class="feature">
+      <h4>Chapterwise MCQs</h4>
+      <p>Practice topic-wise questions and strengthen weak areas.</p>
+    </div>
+    <div class="feature">
+      <h4>Full Mock Tests</h4>
+      <p>Simulate exam pattern — timed full-length tests.</p>
+    </div>
+    <div class="feature">
+      <h4>Performance Reports</h4>
+      <p>Instant score, solution, and history of attempts.</p>
+    </div>
+  </section>
 
-    <button id="startBtn" class="btn">Start Quiz</button>
-  </main>
+  <section id="how" class="container card how">
+    <h3>How it works</h3>
+    <ol>
+      <li>Pick subject & chapter</li>
+      <li>Attempt questions — get instant score</li>
+      <li>Review mistakes & track progress</li>
+    </ol>
+  </section>
 
-  <footer class="container foot">
-    <small>Tip: Add your own questions in <code>questions.js</code></small>
+  <footer class="site-footer container">
+    <div>© <strong>NEETPractice</strong> — Built by Jayveer</div>
+    <div><a href="#">Privacy</a> • <a href="#">Terms</a></div>
   </footer>
 
-  <script src="questions.js"></script>
-  <script>
-    // Populate chapters based on chosen subject
-    const subjectEl = document.getElementById('subject');
-    const chapterEl = document.getElementById('chapter');
-    const countEl = document.getElementById('count');
-    const startBtn = document.getElementById('startBtn');
-
-    function refreshChapters() {
-      const subj = subjectEl.value;
-      const chapters = Object.keys(QUESTIONS[subj] || {});
-      chapterEl.innerHTML = chapters.map(ch =>
-        `<option value="${ch}">${ch.replaceAll('_',' ')}</option>`
-      ).join('');
-    }
-
-    subjectEl.addEventListener('change', refreshChapters);
-    refreshChapters(); // initial
-
-    startBtn.addEventListener('click', () => {
-      const s = subjectEl.value;
-      const c = chapterEl.value;
-      const n = parseInt(countEl.value, 10);
-      // Go to quiz page with params
-      location.href = `quiz.html?subject=${encodeURIComponent(s)}&chapter=${encodeURIComponent(c)}&n=${n}`;
-    });
-  </script>
+<script>
+  // quick start: redirect to quiz page with params (you'll implement quiz.html)
+  document.getElementById('quickStart').addEventListener('click', () => {
+    const s = document.getElementById('quickSubject').value;
+    const n = document.getElementById('quickCount').value;
+    location.href = `quiz.html?subject=${encodeURIComponent(s)}&chapter=Previous_Year_Questions&n=${encodeURIComponent(n)}`;
+  });
+</script>
 </body>
 </html>
