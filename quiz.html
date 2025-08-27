@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="container">
+    <h1>Quiz Time</h1>
+  </header>
+
+  <main class="container card">
+    <div id="quizBox"></div>
+    <button id="submitBtn" class="btn">Submit</button>
+    <div id="result"></div>
+  </main>
+
+  <script src="questions.js"></script>
+  <script>
+    // --- Read URL parameters (subject, chapter, n)
+    const params = new URLSearchParams(location.search);
+    const subject = params.get("subject");
+    const chapter = params.get("chapter");
+    const n = parseInt(params.get("n"), 10);
+
+    const allQ = (QUESTIONS[subject] && QUESTIONS[subject][chapter]) || [];
+    const selectedQ = allQ.slice(0, n); // just take first n questions
+
+    const quizBox = document.getElementById("quizBox");
+
+    // Render questions
+    quizBox.innerHTML = selectedQ.map((q, i) => `
+      <div class="qblock">
+        <p><b>Q${i+1}:</b> ${q.q}</p>
+        ${q.options.map((opt, j) => `
+          <label>
+            <input type="radio" name="q${i}" value="${j}">
+            ${opt}
+          </label><br>
+        `).join('')}
+      </div>
+    `).join('');
+
+    // Submit button
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      let score = 0;
+      selectedQ.forEach((q, i) => {
+        const ans = document.querySelector(`input[name="q${i}"]:checked`);
+        if (ans && parseInt(ans.value) === q.answer) {
+          score++;
+        }
+      });
+      document.getElementById("result").innerHTML = 
+        `<h3>Your Score: ${score} / ${selectedQ.length}</h3>`;
+    });
+  </script>
+</body>
+</html>
